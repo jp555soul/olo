@@ -20,26 +20,58 @@ class App extends Component{
     axios.get(URL)
       .then((result) => {
 
-         var sortPizzas = []
-         for(var i=0; i < result.data.length; i++){
+         // let pizzaMap = {}
+
+         // result.data.forEach((val, index) =>{
+         //   val.toppings.sort()
+         //   let i = val.toppings.join(', ')
+           
+         //   if(pizzaMap.hasOwnProperty(i)){
+         //      pizzaMap[i] = [i, pizzaMap[i][1]+ 1];
+         //   }else{
+         //     pizzaMap[i] = [i, 1];
+         //   }
+         // })
+
+         // console.log(pizzaMap)
+
+
+         // let counterPizzas = []
+         // for (let p of Object.keys(pizzaMap)) {
+         //   let pizzaResult = pizzaMap[p]
+         //   if(counterPizzas.length > 0 && pizzaResult[1] > counterPizzas[counterPizzas.length -1][1]){
+         //     counterPizzas.push(pizzaResult)
+         //     counterPizzas.sort(function(a,b){
+         //       if(a[1] === b[1])
+         //         return 0
+         //       else
+         //         return(a[1] < b[1]) ? -1:1
+         //     })  
+         //   }else{
+         //     console.log('not matching/sorting')
+         //   }
+         // }
+
+         let sortPizzas = []
+         for(let i=0; i < result.data.length; i++){
            result.data[i].toppings.sort()
            sortPizzas.push(result.data[i].toppings.join(', '))
          }
          sortPizzas.sort()
 
-         var counterPizzas = []
-         var dup = sortPizzas.slice(0)
+         let counterPizzas = []
+         let dup = sortPizzas.slice(0)
 
-         for (var j = 0; j < sortPizzas.length; j++) {
-           var counter = 0
-            for (var m = 0; m < dup.length; m++) {
+         for (let j = 0; j < sortPizzas.length; j++) {
+           let counter = 0
+            for (let m = 0; m < dup.length; m++) {
               if (sortPizzas[j] === dup[m]) {
                 counter++
                 delete dup[m]
               }
             }
             if (counter > 0) {
-              var p = {}
+              let p = {}
               p.toppings = sortPizzas[j]
               p.counter = counter
               counterPizzas.push(p)
@@ -57,6 +89,7 @@ class App extends Component{
               return 0;
             }
           )
+      
 
         this.setState({
           pizzas: counterPizzas,
